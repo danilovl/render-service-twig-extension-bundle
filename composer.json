@@ -3,6 +3,11 @@
     "type": "symfony-bundle",
     "description": "Symfony twig extension bundle provides rendering service method",
     "keywords": ["php","symfony","bundle","twig extension"],
+    "authors": [
+        {
+            "name": "Vladimir Danilov"
+        }
+    ],
     "autoload": {
         "psr-4": { "Danilovl\\RenderServiceTwigExtensionBundle\\": "src/" }
     },
