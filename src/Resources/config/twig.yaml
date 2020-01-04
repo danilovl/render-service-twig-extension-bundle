@@ -1,0 +1,6 @@
+services:
+  danilovl_render_service_twig_extension:
+    class: Danilovl\RenderServiceTwigExtensionBundle\Twig\RenderServiceExtension
+    public: false
+    tags:
+      - { name: twig.extension }

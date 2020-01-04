@@ -1,0 +1,14 @@
+{
+    "name": "danilovl/render-service-twig-extension-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony twig extension bundle provides rendering service method",
+    "keywords": ["php","symfony","bundle","twig extension"],
+    "autoload": {
+        "psr-4": { "Danilovl\\RenderServiceTwigExtensionBundle\\": "src/" }
+    },
+    "require": {
+        "php": "^7.3.0",
+        "symfony/framework-bundle": ">=4.4",
+        "symfony/twig-bundle": ">=4.4"
+    }
+}
