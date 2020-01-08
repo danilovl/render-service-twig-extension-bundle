@@ -98,7 +98,7 @@ If you're using the default `services.yaml` configuration, your controllers are 
 If not, then you need to register controller as service. One specific controller as service.
 
 ```yaml
-# app/config/services.yaml
+# config/services.yaml
 
 ...
 services:
@@ -113,7 +113,7 @@ services:
 All controllers in folder, then default service name will be like `App\Controller\UserController`.
 
 ```yaml
-# app/config/services.yaml
+# config/services.yaml
 
 ...
 services:
