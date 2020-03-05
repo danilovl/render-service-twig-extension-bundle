@@ -2,7 +2,6 @@
 
 namespace Danilovl\RenderServiceTwigExtensionBundle\Twig;
 
-use ReflectionException;
 use ReflectionMethod;
 use Twig\TwigFunction;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -11,22 +10,13 @@ use Twig\Extension\AbstractExtension;
 
 class RenderServiceExtension extends AbstractExtension
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    private ContainerInterface $container;
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctions(): array
     {
         return [
@@ -34,14 +24,6 @@ class RenderServiceExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param string $service
-     * @param string $method
-     * @param array $parameters
-     * @param array $services
-     * @return string|null
-     * @throws ReflectionException
-     */
     public function renderService(
         string $service,
         string $method,
@@ -73,13 +55,6 @@ class RenderServiceExtension extends AbstractExtension
         return $response;
     }
 
-    /**
-     * @param string $class
-     * @param string $method
-     * @param array $parameters
-     * @return array
-     * @throws ReflectionException
-     */
     private function orderParameters(
         string $class,
         string $method,
