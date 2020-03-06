@@ -62,12 +62,6 @@ namespace App\Controller;
 
 class UserController extends AbstractController
 {
-    /**
-    * @param User $user
-    * @param EventDispatcherInterface $eventDispatcher
-    * @param string $defaultLanguage
-    * @return Response
-    */
     public function detail(
         User $user,
         EventDispatcherInterface $eventDispatcher,
@@ -81,9 +75,6 @@ class UserController extends AbstractController
         ]);
     }   
 
-    /**
-    * @return string
-    */
     public function detailString(): string 
     {
         //some code
