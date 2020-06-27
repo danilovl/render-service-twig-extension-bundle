@@ -6,7 +6,7 @@ use Danilovl\RenderServiceTwigExtensionBundle\DependencyInjection\RenderServiceE
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class StaticContainerTwigExtensionBundle extends Bundle
+class RenderServiceTwigExtensionBundle extends Bundle
 {
     public function getContainerExtension(): RenderServiceExtension
     {
