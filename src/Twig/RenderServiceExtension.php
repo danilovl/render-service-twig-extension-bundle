@@ -63,11 +63,13 @@ class RenderServiceExtension extends AbstractExtension
         $injectParameters = [];
         foreach ($reflectionParameters as $reflectionParameter) {
             $refName = $reflectionParameter->getName();
+            $injectValue = $parameters[$refName];
+
             if (!isset($parameters[$refName]) && $reflectionParameter->isDefaultValueAvailable()) {
-                $injectParameters[$refName] = $reflectionParameter->getDefaultValue();
-            } else {
-                $injectParameters[$refName] = $parameters[$refName];
+                $injectValue = $reflectionParameter->getDefaultValue();
             }
+
+            $injectParameters[$refName] = $injectValue;
         }
 
         return $injectParameters;
