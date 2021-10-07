@@ -1,3 +1,5 @@
+[![phpunit](https://github.com/danilovl/render-service-twig-extension-bundle/actions/workflows/phpunit.yml/badge.svg)](https://github.com/danilovl/render-service-twig-extension-bundle/actions/workflows/phpunit.yml)
+
 # RenderServiceTwigExtensionBundle #
 
 ## About ##

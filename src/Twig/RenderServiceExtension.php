@@ -35,7 +35,7 @@ class RenderServiceExtension extends AbstractExtension
         }
 
         $parameters = $this->orderParameters(
-            get_class($service),
+            $service,
             $method,
             array_replace($injectParameters, $parameters)
         );
@@ -53,7 +53,7 @@ class RenderServiceExtension extends AbstractExtension
     }
 
     private function orderParameters(
-        string $class,
+        string|object $class,
         string $method,
         array $parameters
     ): array {
