@@ -3,6 +3,7 @@
     "type": "symfony-bundle",
     "description": "Symfony twig extension bundle provides rendering service method",
     "keywords": ["php","symfony","bundle","twig extension"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Vladimir Danilov"

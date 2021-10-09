@@ -1,4 +1,7 @@
 [![phpunit](https://github.com/danilovl/render-service-twig-extension-bundle/actions/workflows/phpunit.yml/badge.svg)](https://github.com/danilovl/render-service-twig-extension-bundle/actions/workflows/phpunit.yml)
+[![downloads](https://img.shields.io/packagist/dt/danilovl/render-service-twig-extension-bundle)](https://packagist.org/packages/danilovl/render-service-twig-extension-bundle)
+[![latest Stable Version](https://img.shields.io/packagist/v/danilovl/render-service-twig-extension-bundle)](https://packagist.org/packages/danilovl/render-service-twig-extension-bundle)
+[![license](https://img.shields.io/packagist/l/danilovl/render-service-twig-extension-bundle)](https://packagist.org/packages/danilovl/render-service-twig-extension-bundle)
 
 # RenderServiceTwigExtensionBundle #
 
@@ -181,3 +184,7 @@ If you want manually inject `EventDispatcherInterface` service.
     'defaultLanguage': 'en'
 }) }}
 ```
+
+## License
+
+The HashidsBundle is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
