@@ -32,8 +32,8 @@ Render ten times.
 
 ### Requirements 
 
-  * PHP 8.0.0 or higher
-  * Symfony 5.0 or higher
+  * PHP 8.1.0 or higher
+  * Symfony 6.0 or higher
 
 ### 1. Installation
 
