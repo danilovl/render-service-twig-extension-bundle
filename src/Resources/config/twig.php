@@ -6,10 +6,9 @@ use Danilovl\RenderServiceTwigExtensionBundle\Twig\RenderServiceExtension;
 
 return static function (ContainerConfigurator $container): void {
     $container->services()
-        ->set('danilovl_render_service_twig_extension', RenderServiceExtension::class)
+        ->set(RenderServiceExtension::class, RenderServiceExtension::class)
         ->autowire()
         ->arg('$container', service('service_container'))
         ->private()
-        ->tag('twig.extension')
-        ->alias(RenderServiceExtension::class, 'danilovl_render_service_twig_extension');
+        ->tag('twig.extension');
 };

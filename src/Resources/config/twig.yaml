@@ -1,6 +1,5 @@
 services:
-  danilovl_render_service_twig_extension:
-    class: Danilovl\RenderServiceTwigExtensionBundle\Twig\RenderServiceExtension
+  Danilovl\RenderServiceTwigExtensionBundle\Twig\RenderServiceExtension:
     arguments:
       $container: '@service_container'
     public: false
