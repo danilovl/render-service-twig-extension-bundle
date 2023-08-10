@@ -4,6 +4,7 @@ namespace Danilovl\RenderServiceTwigExtensionBundle\Tests\Twig;
 
 use Danilovl\RenderServiceTwigExtensionBundle\Twig\RenderServiceExtension;
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\{
     Container,
@@ -26,9 +27,7 @@ class RenderServiceExtensionTest extends TestCase
         $this->twig->addExtension($renderServiceExtension);
     }
 
-    /**
-     * @dataProvider filtersProvider
-     */
+    #[DataProvider('filtersProvider')]
     public function testFilters(string $template, mixed $result): void
     {
         $output = $this->twig->createTemplate($template)->render();
@@ -36,7 +35,7 @@ class RenderServiceExtensionTest extends TestCase
         $this->assertEquals($output, $result);
     }
 
-    public function filtersProvider(): Generator
+    public static function filtersProvider(): Generator
     {
         yield ["{{ render_service('app.service.controller', 'simpleText') }}", 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'];
         yield ["{{ render_service('App\\\\Controller\\\\ServiceController', 'simpleText') }}", 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.'];

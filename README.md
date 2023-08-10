@@ -33,7 +33,7 @@ Render ten times.
 ### Requirements 
 
   * PHP 8.2.0 or higher
-  * Symfony 6.2 or higher
+  * Symfony 6.3 or higher
 
 ### 1. Installation
 
