@@ -9,8 +9,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class RenderServiceExtension extends Extension
 {
-    public const ALIAS = 'danilovl_render_service';
-    private const DIR_CONFIG = '/../Resources/config';
+    public const string ALIAS = 'danilovl_render_service';
+    private const string DIR_CONFIG = '/../Resources/config';
 
     public function load(array $configs, ContainerBuilder $container)
     {
