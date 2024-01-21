@@ -40,7 +40,10 @@ class RenderServiceExtension extends AbstractExtension
             array_replace($injectParameters, $parameters)
         );
 
-        $response = call_user_func_array([$service, $method], $parameters);
+        /** @var callable $callable */
+        $callable = [$service, $method];
+        $response = call_user_func_array($callable, $parameters);
+
         if ($response instanceof Response) {
             $response = $response->getContent();
         }
