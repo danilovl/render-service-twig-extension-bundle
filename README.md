@@ -40,7 +40,7 @@ Render ten times.
 Install `danilovl/render-service-twig-extension-bundle` package by Composer:
  
 ``` bash
-$ composer require danilovl/render-service-twig-extension-bundle
+composer require danilovl/render-service-twig-extension-bundle
 ```
 Add the RenderServiceTwigExtensionBundle to your application's bundles if does not add automatically:
 
