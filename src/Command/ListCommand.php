@@ -47,8 +47,26 @@ class ListCommand extends Command
                 $function->name,
                 $function->service,
                 $function->method,
-                json_encode($function->options)
+                $this->getOptionRow($function->options)
             ]);
         }
+    }
+
+    private function getOptionRow(array $options):string
+    {
+        $result = '';
+        foreach ($options as $key => $value) {
+            if (empty($value)) {
+                continue;
+            }
+
+            if (is_array($value)) {
+                $value = json_encode($value);
+            }
+
+            $result .= $key . ': ' . $value . "\n";
+        }
+
+        return $result;
     }
 }

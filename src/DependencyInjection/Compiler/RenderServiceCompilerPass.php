@@ -33,7 +33,7 @@ class RenderServiceCompilerPass implements CompilerPassInterface
 
         $result = [
             'function' => [],
-            'filter' => [],
+            'filter' => []
         ];
 
         foreach ($container->getDefinitions() as $id => $definition) {
@@ -81,12 +81,16 @@ class RenderServiceCompilerPass implements CompilerPassInterface
         ReflectionAttribute $reflectionAttribute,
         bool $useMethodName = false
     ): void {
+        if (str_contains($method, '__')) {
+            return;
+        }
+
         /** @var AsTwigFunction|AsTwigFilter $asTwigFunctionAttribute */
         $asTwigFunctionAttribute = $reflectionAttribute->newInstance();
 
         $key = match ($asTwigFunctionAttribute::class) {
             AsTwigFunction::class => 'function',
-            AsTwigFilter::class => 'filter',
+            AsTwigFilter::class => 'filter'
         };
 
         $configurationKey = $key . 'Options';
@@ -144,7 +148,6 @@ class RenderServiceCompilerPass implements CompilerPassInterface
 
                 $configuration[$key][$option] = $item;
             }
-
         }
 
         return $configuration;
