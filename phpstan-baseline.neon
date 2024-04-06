@@ -1,0 +1,21 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Match expression does not handle remaining values\\: \\(class\\-string\\<Danilovl\\\\RenderServiceTwigExtensionBundle\\\\Attribute\\\\AsTwigFilter\\>&literal\\-string\\)\\|\\(class\\-string\\<Danilovl\\\\RenderServiceTwigExtensionBundle\\\\Attribute\\\\AsTwigFunction\\>&literal\\-string\\)$#"
+			count: 1
+			path: src/DependencyInjection/Compiler/RenderServiceCompilerPass.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(array\\|string\\)\\: mixed\\)\\|null, Closure\\(array\\)\\: Danilovl\\\\RenderServiceTwigExtensionBundle\\\\Service\\\\TwigExtensionItem given\\.$#"
+			count: 2
+			path: src/Service/TwigExtensionContainer.php
+
+		-
+			message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFilter constructor expects array\\{class\\-string, string\\}\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{object, mixed\\} given\\.$#"
+			count: 1
+			path: src/Twig/AsAttributeTwigExtension.php
+
+		-
+			message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFunction constructor expects array\\{class\\-string, string\\}\\|\\(callable\\(\\)\\: mixed\\)\\|null, array\\{object, mixed\\} given\\.$#"
+			count: 1
+			path: src/Twig/AsAttributeTwigExtension.php

@@ -2,13 +2,20 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Danilovl\RenderServiceTwigExtensionBundle\Twig\RenderServiceExtension;
+use Danilovl\RenderServiceTwigExtensionBundle\Service\TwigExtensionContainer;
+use Danilovl\RenderServiceTwigExtensionBundle\Twig\{
+    AsAttributeTwigExtension,
+};
 
 return static function (ContainerConfigurator $container): void {
     $container->services()
-        ->set(RenderServiceExtension::class, RenderServiceExtension::class)
+        ->set(AsAttributeTwigExtension::class, AsAttributeTwigExtension::class)
         ->autowire()
         ->arg('$container', service('service_container'))
-        ->private()
+        ->public()
         ->tag('twig.extension');
+
+    $container->services()
+        ->set(TwigExtensionContainer::class, TwigExtensionContainer::class)
+        ->public();
 };

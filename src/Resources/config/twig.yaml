@@ -1,7 +1,11 @@
 services:
-  Danilovl\RenderServiceTwigExtensionBundle\Twig\RenderServiceExtension:
+  Danilovl\RenderServiceTwigExtensionBundle\Twig\AsAttributeTwigExtension:
+    autowire: true
     arguments:
       $container: '@service_container'
-    public: false
+    public: true
     tags:
       - { name: twig.extension }
+
+  Danilovl\RenderServiceTwigExtensionBundle\Service\TwigExtensionContainer:
+    public: public

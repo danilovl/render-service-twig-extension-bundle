@@ -9,17 +9,26 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class RenderServiceExtension extends Extension
 {
-    public const string ALIAS = 'danilovl_render_service';
     private const string DIR_CONFIG = '/../Resources/config';
 
     public function load(array $configs, ContainerBuilder $container): void
     {
+        $configuration = new Configuration;
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter('danilovl_render_service.configuration', [
+            'prefix' => $config['prefix'],
+            'to_snake_case' => $config['to_snake_case'],
+            'filterOptions' => $config['filter_options'] ?? [],
+            'functionOptions' => $config['function_options'] ?? []
+        ]);
+
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . self::DIR_CONFIG));
         $loader->load('twig.yaml');
     }
 
     public function getAlias(): string
     {
-        return self::ALIAS;
+        return Configuration::ALIAS;
     }
 }
