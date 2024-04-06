@@ -162,6 +162,14 @@ class RenderServiceController
 {{ app_function_sum(2,3) }}
 ```
 
+### 4. Command
+
+Show a list of twig extensions created by attributes.
+
+```bash
+php bin/console danilovl:render-service:list
+```
+
 ## License
 
 The RenderServiceTwigExtensionBundle is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
