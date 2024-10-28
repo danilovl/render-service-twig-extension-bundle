@@ -18,6 +18,6 @@ class SimpleMethodService
     #[AsTwigFilter('filter_upper')]
     public function twigFilterUpper(string $text): string
     {
-        return strtoupper($text);
+        return mb_strtoupper($text);
     }
 }

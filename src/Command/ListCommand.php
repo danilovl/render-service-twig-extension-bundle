@@ -52,7 +52,7 @@ class ListCommand extends Command
         }
     }
 
-    private function getOptionRow(array $options):string
+    private function getOptionRow(array $options): string
     {
         $result = '';
         foreach ($options as $key => $value) {
