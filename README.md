@@ -7,25 +7,25 @@
 
 ## About ##
 
-Symfony twig extension bundle provides an easy way for creating functions or filters from service methods or objects.
+The Symfony Twig Extension Bundle provides an easy way to create functions or filters from service methods or objects.
 
-The main task of this extension is to replace the existing twig method `render(controller())`.
+The main purpose of this extension is to replace the existing Twig `render(controller())` method.
 
-The main disadvantage of the existing method is that it performs a sub-request, which increases the total query execution time.
+The main disadvantage of the existing method is that it performs a sub-request, which increases the total execution time of the query.
 
 ## Comparison performance metrics ##
 
-In this example, the same page was used, with the only difference being the number of times the standard `render(controller())` method was used compared to the new runtime twig function.
+In this example, the same page is used, with the only difference being the number of times the standard `render(controller())` method is called compared to the new runtime Twig function.
 
-On the left side, you can see the use of the standard twig function, while on the right side, the runtime twig function is used.
+On the left side, the standard Twig function is used, while on the right side, the runtime Twig function is applied.
 
 Render three times.
 
-![Alt text](/pic/example-1.png?raw=true "First example")
+![Alt text](/.github/readme/example-1.png?raw=true "First example")
 
 Render ten times.
 
-![Alt text](/pic/example-2.png?raw=true "Second example")
+![Alt text](/.github/readme/example-2.png?raw=true "Second example")
 
 ### Requirements
 
@@ -39,7 +39,7 @@ Install `danilovl/render-service-twig-extension-bundle` package by Composer:
 ``` bash
 composer require danilovl/render-service-twig-extension-bundle
 ```
-Add the RenderServiceTwigExtensionBundle to your application's bundles if does not add automatically:
+Add the `RenderServiceTwigExtensionBundle` to your application's bundles if it is not added automatically:
 
 ``` php
 <?php
@@ -53,7 +53,7 @@ return [
 
 ### 2. Configuration
 
-You can set global parameters for all extensions.
+You can define global parameters for all extensions.
 
 ```yaml
 danilovl_render_service:
@@ -129,7 +129,7 @@ class CountService
 {{ app_math_multiplication_operation(2,3) }}
 ```  
 
-You can use the attribute separately with a specific method.
+You can use the attribute individually on a specific method.
 
 ```php
 <?php declare(strict_types=1);
@@ -164,11 +164,13 @@ class RenderServiceController
 
 ### 4. Command
 
-Show a list of twig extensions created by attributes.
+Show a list of Twig extensions generated from attributes.
 
 ```bash
 php bin/console danilovl:render-service:list
 ```
+
+![Alt text](/.github/readme/command-list.png?raw=true "Command list example")
 
 ## License
 
