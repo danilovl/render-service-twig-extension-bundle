@@ -9,13 +9,13 @@ use PHPUnit\Framework\TestCase;
 
 class FormatNameHelperTest extends TestCase
 {
-    #[DataProvider('camelCaseProvider')]
+    #[DataProvider('provideCamelCaseToSnakeCaseCases')]
     public function testCamelCaseToSnakeCase(string $input, string $expected): void
     {
         $this->assertSame($expected, FormatNameHelper::camelCaseToSnakeCase($input));
     }
 
-    public static function camelCaseProvider(): Generator
+    public static function provideCamelCaseToSnakeCaseCases(): Generator
     {
         yield ['camelCase', 'camel_case'];
         yield ['HelloWorld', 'hello_world'];
