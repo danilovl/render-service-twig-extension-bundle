@@ -20,7 +20,7 @@ class TwigExtensionContainer
     }
 
     /**
-     * @param array{name: string, service: string, method: string, options: array} $functions
+     * @param array<array{name: string, service: string, class: string, method: string, options: array}> $functions
      */
     public function setFunctions(array $functions): void
     {
@@ -28,6 +28,7 @@ class TwigExtensionContainer
             return new TwigExtensionItem(
                 $item['name'],
                 $item['service'],
+                $item['class'],
                 $item['method'],
                 $item['options']
             );
@@ -40,7 +41,7 @@ class TwigExtensionContainer
     }
 
     /**
-     * @param array{name: string, service: string, method: string, options: array} $filters
+     * @param array<array{name: string, service: string, class: string, method: string, options: array}> $filters
      */
     public function setFilters(array $filters): void
     {
@@ -48,6 +49,7 @@ class TwigExtensionContainer
             return new TwigExtensionItem(
                 $item['name'],
                 $item['service'],
+                $item['class'],
                 $item['method'],
                 $item['options']
             );

@@ -5,8 +5,6 @@ services:
     public: true
 
   Danilovl\RenderServiceTwigExtensionBundle\Twig\AsAttributeTwigExtension:
-    arguments:
-      $container: '@service_container'
     tags:
       - { name: twig.extension }
 

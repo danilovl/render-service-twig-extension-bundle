@@ -6,6 +6,7 @@ use Danilovl\RenderServiceTwigExtensionBundle\Attribute\{
     AsTwigFilter,
     AsTwigFunction
 };
+use Danilovl\RenderServiceTwigExtensionBundle\DependencyInjection\RenderServiceExtension;
 use Danilovl\RenderServiceTwigExtensionBundle\Exception\RuntimeException;
 use Danilovl\RenderServiceTwigExtensionBundle\Helper\FormatNameHelper;
 use Danilovl\RenderServiceTwigExtensionBundle\Service\TwigExtensionContainer;
@@ -36,14 +37,36 @@ class RenderServiceCompilerPass implements CompilerPassInterface
             'filter' => []
         ];
 
-        foreach ($container->getDefinitions() as $id => $definition) {
-            if ($definition->hasTag('container.excluded') || $definition->isAbstract() || $definition->isSynthetic()) {
+        $classToService = [];
+
+        $serviceIds = array_keys($container->findTaggedServiceIds(RenderServiceExtension::TAG));
+
+        foreach ($serviceIds as $id) {
+            $definition = $container->getDefinition($id);
+            if ($definition->isAbstract()) {
                 continue;
             }
 
-            $class = $definition->getClass();
-            if (!$class || !class_exists($class)) {
+            $class = $container->getParameterBag()->resolveValue($definition->getClass());
+            if (!is_string($class) || !class_exists($class)) {
                 continue;
+            }
+
+            if (isset($classToService[$class]) && $classToService[$class] !== $id) {
+                $message = sprintf(
+                    'Class "%s" is used by services "%s" and "%s". Twig runtime is resolved by class, so only one service per class can expose AsTwigFunction/AsTwigFilter.',
+                    $class,
+                    $classToService[$class],
+                    $id
+                );
+
+                throw new RuntimeException($message);
+            }
+
+            $classToService[$class] = $id;
+
+            if (!$definition->hasTag(RenderServiceExtension::TWIG_RUNTIME_TAG)) {
+                $definition->addTag(RenderServiceExtension::TWIG_RUNTIME_TAG);
             }
 
             $reflectionClass = (new ReflectionClass($class));
@@ -53,7 +76,7 @@ class RenderServiceCompilerPass implements CompilerPassInterface
 
             if ($classAttribute !== null) {
                 foreach ($methods as $method) {
-                    $this->createExtension($result, $id, $method->getName(), $configuration, $classAttribute, true);
+                    $this->createExtension($result, $id, $class, $method->getName(), $configuration, $classAttribute, true);
                 }
 
                 continue;
@@ -65,7 +88,7 @@ class RenderServiceCompilerPass implements CompilerPassInterface
                     continue;
                 }
 
-                $this->createExtension($result, $id, $method->getName(), $configuration, $methodAttribute);
+                $this->createExtension($result, $id, $class, $method->getName(), $configuration, $methodAttribute);
             }
         }
 
@@ -76,6 +99,7 @@ class RenderServiceCompilerPass implements CompilerPassInterface
     private function createExtension(
         array &$result,
         string $service,
+        string $class,
         string $method,
         array $configuration,
         ReflectionAttribute $reflectionAttribute,
@@ -88,10 +112,7 @@ class RenderServiceCompilerPass implements CompilerPassInterface
         /** @var AsTwigFunction|AsTwigFilter $asTwigFunctionAttribute */
         $asTwigFunctionAttribute = $reflectionAttribute->newInstance();
 
-        $key = match ($asTwigFunctionAttribute::class) {
-            AsTwigFunction::class => 'function',
-            AsTwigFilter::class => 'filter'
-        };
+        $key = $asTwigFunctionAttribute instanceof AsTwigFunction ? 'function' : 'filter';
 
         $configurationKey = $key . 'Options';
 
@@ -116,6 +137,7 @@ class RenderServiceCompilerPass implements CompilerPassInterface
         $result[$key][] = [
             'name' => $name,
             'service' => $service,
+            'class' => $class,
             'method' => $method,
             'options' => $options
         ];
@@ -141,7 +163,7 @@ class RenderServiceCompilerPass implements CompilerPassInterface
             }
 
             foreach ($options as $option) {
-                $item = $configuration[$key][$option];
+                $item = $configuration[$key][$option] ?? null;
                 if (empty($item)) {
                     $item = null;
                 }

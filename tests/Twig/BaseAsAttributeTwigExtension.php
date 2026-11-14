@@ -24,6 +24,7 @@ use Symfony\Component\DependencyInjection\{
 use Twig\Environment;
 use Twig\Extension\ExtensionInterface;
 use Twig\Loader\FilesystemLoader;
+use Twig\RuntimeLoader\FactoryRuntimeLoader;
 
 abstract class BaseAsAttributeTwigExtension extends TestCase
 {
@@ -31,9 +32,7 @@ abstract class BaseAsAttributeTwigExtension extends TestCase
 
     protected function setUp(): void
     {
-        $this->twig = new Environment(new FilesystemLoader, [
-            'cache' => __DIR__ . '/../../var/cache/twig-test',
-        ]);
+        $this->twig = new Environment(new FilesystemLoader, ['cache' => false]);
     }
 
     public function testExtension(): ContainerBuilder
@@ -51,10 +50,12 @@ abstract class BaseAsAttributeTwigExtension extends TestCase
     {
         $definition = new Definition(SimpleMethodService::class);
         $definition->setPublic(true);
+        $definition->setAutoconfigured(true);
         $container->setDefinition(SimpleMethodService::class, $definition);
 
         $definition = new Definition(CountService::class);
         $definition->setPublic(true);
+        $definition->setAutoconfigured(true);
         $container->setDefinition(CountService::class, $definition);
 
         $this->expectNotToPerformAssertions();
@@ -65,11 +66,13 @@ abstract class BaseAsAttributeTwigExtension extends TestCase
     #[Depends('testAddAttributeService')]
     public function testCompilerPass(ContainerBuilder $container): ContainerBuilder
     {
-        (new RenderServiceCompilerPass)->process($container);
-
-        $this->expectNotToPerformAssertions();
-
+        $container->addCompilerPass(new RenderServiceCompilerPass);
         $container->compile();
+
+        foreach ([SimpleMethodService::class, CountService::class] as $id) {
+            $this->assertTrue($container->getDefinition($id)->hasTag(RenderServiceExtension::TAG));
+            $this->assertTrue($container->getDefinition($id)->hasTag(RenderServiceExtension::TWIG_RUNTIME_TAG));
+        }
 
         return $container;
     }
@@ -82,9 +85,30 @@ abstract class BaseAsAttributeTwigExtension extends TestCase
         $renderServiceExtension = $container->get(AsAttributeTwigExtension::class);
         $this->twig->addExtension($renderServiceExtension);
 
+        $created = [];
+        $runtimeLoader = new FactoryRuntimeLoader([
+            SimpleMethodService::class => static function () use ($container, &$created): object {
+                $created[] = SimpleMethodService::class;
+
+                return $container->get(SimpleMethodService::class);
+            },
+            CountService::class => static function () use ($container, &$created): object {
+                $created[] = CountService::class;
+
+                return $container->get(CountService::class);
+            }
+        ]);
+
+        $this->twig->addRuntimeLoader($runtimeLoader);
+
+        $this->twig->getFunctions();
+        $this->twig->getFilters();
+        $this->assertSame([], $created, 'Owner services must not be created while registering functions/filters.');
+
         $output = $this->twig->createTemplate($template)->render();
 
         $this->assertEquals($output, $result);
+        $this->assertCount(1, $created, 'Owner service must be created on first call.');
     }
 
     abstract public static function extensionProvider(): Generator;

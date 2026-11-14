@@ -7,6 +7,7 @@ readonly class TwigExtensionItem
     public function __construct(
         public string $name,
         public string $service,
+        public string $class,
         public string $method,
         public array $options
     ) {}

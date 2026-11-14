@@ -13,7 +13,6 @@ return static function (ContainerConfigurator $container): void {
 
     $services
         ->set(AsAttributeTwigExtension::class, AsAttributeTwigExtension::class)
-        ->arg('$container', service('service_container'))
         ->tag('twig.extension');
 
     $services->set(TwigExtensionContainer::class, TwigExtensionContainer::class);
